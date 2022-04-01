@@ -5,12 +5,12 @@
         <!-- the components are nested because the tag slot it will 
         be replaced for whatever we put inside the componentes -->
         <div v-show="currentSlide === index + 1" class="slide-info">
-          <img :src="require(`./assets/${slide}.jpeg`)" alt="">
+          <img :src="require(`./assets/${slide}.jpeg`)" alt="" />
         </div>
       </SlideComponent>
     </CarouselComponent>
   </div>
-   
+
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
   setup(){
     const carouselSlides = ['image-1', 'image-2', 'image-3']
       return {
-        carouselSlides: carouselSlides
+        carouselSlides
       }
   }
 }
