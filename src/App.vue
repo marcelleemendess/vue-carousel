@@ -1,6 +1,13 @@
 <template>
   <div class="home">
-    <CarouselComponent class="carousel" v-slot="{ currentSlide }">
+    <CarouselComponent 
+      :navigation="false" 
+      :pagination="false"
+      :startAutoPlay="true"
+      :timeout="5000" 
+      class="carousel" 
+      v-slot="{ currentSlide }"
+    >
       <SlideComponent v-for="(slide, index) in carouselSlides" :key="index">
         <!-- the components are nested because the tag slot it will 
         be replaced for whatever we put inside the componentes -->

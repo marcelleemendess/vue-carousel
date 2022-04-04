@@ -3,7 +3,7 @@
       <slot :currentSlide="currentSlide"/>
 
       <!-- Navigation -->
-      <div class="navigate">
+      <div v-if="navEnabled" class="navigate">
         <div class="toggle-page left">
           <i @click="prevSlide" class="fas fa-chevron-left"></i>
         </div>
@@ -13,7 +13,7 @@
       </div>
 
       <!-- Pagination -->
-      <div class="pagination">
+      <div v-if="paginationEnabled" class="pagination">
         <span 
           @click="goToSlide(index)"
           v-for="(slides, index) in getSlideCount"
@@ -28,11 +28,16 @@
 <script>
 import { ref, onMounted } from 'vue'; 
 export default {
-  setup(){
+  props: ["startAutoPlay", "timeout", "navigation", "pagination"],
+  setup(props){
     const currentSlide = ref(1); // start with 1, to follow the slides by quantity, not index
     const getSlideCount = ref(null); //before page mount, we have access to the amount of slides
-    const autoPlayEnabled = ref(true);
-    const timeoutDuration = ref(5000);
+    const autoPlayEnabled = ref(props.startAutoPlay === undefined ? true : props.startAutoPlay);
+    const timeoutDuration = ref(props.timeout=== undefined ? 5000 : props.timeout);
+
+    //make the components reuseful.
+    const paginationEnabled = ref(props.pagination === undefined ? true : props.pagination);
+    const navEnabled = ref(props.navigation === undefined ? true : props.navigation);
 
     //Next slide
     const nextSlide = () => {
@@ -62,7 +67,7 @@ export default {
       getSlideCount.value = document.querySelectorAll(".slide").length;
     });
 
-    return { currentSlide, nextSlide, prevSlide, getSlideCount, goToSlide};
+    return { currentSlide, nextSlide, prevSlide, getSlideCount, goToSlide, paginationEnabled, navEnabled  };
   },
 };
 </script>
